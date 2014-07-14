@@ -35,6 +35,9 @@ class LQJX:
             logging.error("登录失败，请检查账号状态或请求参数!")
             flag = False
         return flag
+        
+    def logout(self):
+        lq_session.get(LQJX_HOST + '/Login.aspx?LoginOut=true', headers=self.header)    
 
     def order_car(self, xnsd, jlcbh):
         query_param = {
