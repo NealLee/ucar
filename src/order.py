@@ -19,16 +19,20 @@ passwd = ""
 
 if __name__ == "__main__":
     lq = lqjx.LQJX()
-    if lq.login(uname, passwd):
-        while 1:
-            cars = lq.get_bookable_car(xnsd[1])
-            if 'null_0' in cars:
-                logging.info('没到时间或者没有可预订车辆！')
-            else:
-                result = lq.order_car(xnsd[1], jlcbh)
-                print result
-                if u'成功' in result:
-                    logging.info('\n 预定成功！')
-                    sys.exit(0)
-            #增加间隔时间，防止频繁请求，账号被封
-            time.sleep(3)
+    try:
+        if lq.login(uname, passwd):
+            while 1:
+                cars = lq.get_bookable_car(xnsd[1])
+                if 'null_0' in cars:
+                    logging.info('没到时间或者没有可预订车辆！')
+                else:
+                    result = lq.order_car(xnsd[1], jlcbh)
+                    print result
+                    if u'成功' in result:
+                        logging.info('\n 预定成功！')
+                        sys.exit(0)
+                #增加间隔时间，防止频繁请求，账号被封
+                time.sleep(3)
+    except KeyboardInterrupt:
+        lq.logout()
+        logging.info('退出约车系统！')
